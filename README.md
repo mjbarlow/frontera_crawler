@@ -10,7 +10,7 @@ Scrapy + Frontera (A crawling project) - translated from the original Japanese v
     - docs/twisted-change.md (Change according to this instructions)
 
 ## Introduction
-### python package dependencies
+### Python package dependencies
 virtualenv - Please do not do it unless you separate the environment with etc.
 Solve dependencies for distibuted / kafka / hbase, then uninstall and install via the master.
 
@@ -51,35 +51,34 @@ SCORING_LOG_TOPIC
 
 #### /frontier/\*\_settings.py
 ```
-HBASE_THRIFT_HOST = 'localhost' # HBaseが動作するマシンの場所
-HBASE_THRIFT_PORT = 9090 # HBaseのThriftクライアントが動作するポート番号 デフォルト9090です
-HBASE_METADATA_TABLE = 'metadata' # Fronteraによって作成されるテーブル名．作成されていない場合はFronteraで自動作成します
-HBASE_QUEUE_TABLE = 'queue' # Fronteraによって作成されるテーブル名．作成されていない場合はFronteraで自動作成します
+HBASE_THRIFT_HOST = 'localhost' # HBase location
+HBASE_THRIFT_PORT = 9090 # Port number where HBase's Thrift client runs, default is 9090
+HBASE_METADATA_TABLE = 'metadata' # The table name created by Frontera. If it is not created, Frontera creates it automatically.
+HBASE_QUEUE_TABLE = 'queue' # The table name created by Frontera. If it is not created, Frontera creates it automatically.
 ```
 
-### Kafka, HBaseの設定
-Kafkaを導入，トピック（上の `SPIDER_LOG_TOPIC, SPIDER_FEED_TOPIC, SCORING_LOG_TOPIC` と一致させる）を作成してください．
+### Kafka, HBase settings
+Introduce Kafka, create a topic (match `SPIDER_LOG_TOPIC, SPIDER_FEED_TOPIC, SCORING_LOG_TOPIC` above).
 
-以下にコマンド例を示します．詳しくは[kafkaのドキュメント](https://kafka.apache.org/documentation/#quickstart)を参照して下さい．
+An example command is shown below. For details, please refer to [kafka document](https://kafka.apache.org/documentation/#quickstart).
 ```
 $ /path/to/kafka/bin/kafka-topics.sh --create --topic frontier-done --replication-factor 1 --partitions 1 --zookeeper localhost:2181
 $ /path/to/kafka/bin/kafka-topics.sh --create --topic frontier-score --replication-factor 1 --partitions 1 --zookeeper localhost:2181
 $ /path/to/kafka/bin/kafka-topics.sh --create --topic frontier-todo --replication-factor 1 --partitions 2 --zookeeper localhost:2181
 ```
 
-また，HBaseを導入し，`crawler` というnamespaceを作成してください．
+Also, introduce HBase and create a namespace called `crawler`.
 
-以下にコマンド例を示します．詳しくは[HBaseのドキュメント](https://hbase.apache.org/book.html#_namespace)を参照して下さい．
-```
+An example command is shown below. For details, refer to [HBase document](https://hbase.apache.org/book.html#_namespace).```
 $ hbase shell
 > create_namespace 'crawler'
 ```
 
-## 動かし方
+How to move
 ### Frontera
-Kafka + zookeeperが動いていることが前提です．
+It is assumed that Kafka + zookeeper is running.
 
-ターミナルを2つ立ち上げ，fronteraの各ワーカを起動します．`run_*.sh` 内でfronteraのワーカが終了するたびに再起動するようにしています．
+Launch two terminals and start each worker of frontera. It restarts every time frontera's worker terminates in `run _ *. sh`..
 
 ```
 $ cd /path/to/project/root
@@ -90,19 +89,19 @@ $ cd /path/to/project/root
 $ bash scripts/run_strategy.sh
 ```
 
-終了時には，以下のようにfronteraを終了させます．fronteraのループを止めるスクリプトを叩くようにしています．
+At the time of termination, we terminate frontera as follows. I try to hit a script to stop frontera's loop.
 ```
 $ cd /path/to/project/root
 $ bash scripts/kill_frontera_loop.sh
 ```
 
 ### Scrapy
-fronteraの各ワーカが起動していることが前提です．
+It is assumed that frontera worker is running.
 
-#### 初回時のセットアップ
-プロジェクトルートに以下のように `partition_id.txt` を作成し， `scripts/init.sh` を実行してください．
-このときの数字がFronteraが管理するScrapyのIDになります．
-この例ではScrapyのIDは0になります．
+#### First Time Setup
+Create `partition_id.txt` in the project root as follows and execute 'scripts/init.sh'.
+The number now is the ID of Scrapy managed by Frontera.
+In this example, the ID of Scrapy is 0.
 
 ```
 $ cd /path/to/project/root
@@ -110,8 +109,8 @@ $ echo 0 > partition_id.txt
 $ bash scripts/init.sh
 ```
 
-#### Scrapyの起動手順
-Scrapyの数だけターミナルを立ち上げ，Scrapyを起動します．fronteraと同様，シェルスクリプト内でScrapyが終了するたびに再起動するようにしています．
+#### Procedure for starting Scrapy
+Launch the terminal as many as Scrapy and start Scrapy. Like frontera, it restarts every time Scrapy finishes in a shell script.
 ```
 $ cd /path/to/project/root
 $ bash scripts/loop_scrapy.sh
