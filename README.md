@@ -69,7 +69,8 @@ $ /path/to/kafka/bin/kafka-topics.sh --create --topic frontier-todo --replicatio
 
 Also, introduce HBase and create a namespace called `crawler`.
 
-An example command is shown below. For details, refer to [HBase document](https://hbase.apache.org/book.html#_namespace).```
+An example command is shown below. For details, refer to [HBase document](https://hbase.apache.org/book.html#_namespace).
+```
 $ hbase shell
 > create_namespace 'crawler'
 ```
@@ -116,7 +117,7 @@ $ cd /path/to/project/root
 $ bash scripts/loop_scrapy.sh
 ```
 
-Scrapyのログは `scrapy_log/scrapy.log` に吐き出されます．pythonのloggingモジュールによってローテーションがかかることがあるので，監視する場合は `tail -F` を使うと良いと思います．
+Scrapy's logs are copied to `scrapy_log/scrapy.log`. Since it may be rotated by python's logging module, you should use `tail -F` when monitoring.
 
 ```
 $ tail -F ~/workspace/frontera7/japanese_company_spider[0,1]/scrapy_log/scrapy.log
