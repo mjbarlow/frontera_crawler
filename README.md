@@ -1,5 +1,5 @@
-# Scrapy On Frontera
-Scrapy + Frontera (A crawling project)
+# Scrapy with Frontera 
+Scrapy + Frontera (A crawling project) - translated from the original Japanese version. (Thanks RY-2718)
 
 ## Dependencies:
 - [Scrapy](https://github.com/scrapy/scrapy)
@@ -37,9 +37,9 @@ BUCKET_NAME # S3[Bucket name]
 SPIDER_FEED_PARTITIONS # number of spiders(Scrapy) 
 SPIDER_LOG_PARTITIONS #  number of workers(Frontera)
 
-KAFKA_LOCATION # Kafkaを動作させるマシンの場所 e.g., 'localhost:9092'
-# 以下はKafkaのトピックに関する設定です．
-# ScrapyとFronteraの間で一致していればなんでも良いですが，デフォルトの名前を少し変更するくらいが妥当に思います．
+KAFKA_LOCATION # Kafka location: e.g., 'localhost:9092'
+# Settings related to kafka:
+# All is fine as long as it matches between Scrapy and Frontera, but it seems reasonable to slightly change the default name.
 SPIDER_LOG_DBW_GROUP
 SPIDER_LOG_SW_GROUP
 SCORING_LOG_DBW_GROUP
