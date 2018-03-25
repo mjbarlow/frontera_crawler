@@ -75,7 +75,7 @@ $ hbase shell
 > create_namespace 'crawler'
 ```
 
-How to move
+## How to move
 ### Frontera
 It is assumed that Kafka + zookeeper is running.
 

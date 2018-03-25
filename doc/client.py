@@ -1,5 +1,4 @@
-##以下のメソッドを `twisted/names/client.py` に追加
-
+## Add the following methods to `twisted/names/client.py`
 def getHostByNameV4(name, timeout=None, effort=10):
     return getResolver().getHostByNameV4(name, timeout, effort)
 def getHostByNameV6Address(name, timeout=None, effort=10):

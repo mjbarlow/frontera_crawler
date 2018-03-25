@@ -1,4 +1,4 @@
-## `twisted/names/common.py` で以下のメソッドを定義，書き換え 
+## Define and rewrite the following methods in `twisted/names/common.py`
 
 class ResolverBase:
     def getHostByName(self, name, timeout=None, effort=10):

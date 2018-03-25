@@ -17,7 +17,7 @@ logging.config.fileConfig(fname="logging.conf", disable_existing_loggers=False)
 ignore_logger = logging.getLogger("ignore_logger")
 
 class GeneralSpider(Spider):
-    # 最初の方はScrapyそのものを動かすための記述
+    # The first one is a description for moving Scrapy itself
     name = 'crawler'
 
     deny_domain_list = []
@@ -37,7 +37,7 @@ class GeneralSpider(Spider):
         if (not isinstance(response, HtmlResponse)) or response.status != 200:
             return
 
-        # 返ってきたHTMLからURLを抽出して次の要求を出す
+        # Extract the URL from the returned HTML and issue the next request
         for link in self.le.extract_links(response):
 
             r = Request(url=link.url,
@@ -46,7 +46,7 @@ class GeneralSpider(Spider):
             r.meta.update(link_text=link.text)
             yield r
 
-        # 返ってきたHTMLのパース部分
+        # The parsing part of the returned HTML
         item = TestItem()
         url = response.url
         item['url'] = url
