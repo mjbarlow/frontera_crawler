@@ -1,18 +1,18 @@
 # Scrapy On Frontera
-Scrapy + Fronteraを用いてクローリングするプロジェクトです．
+Scrapy + Frontera (A crawling project)
 
-## 依存
+## Dependencies:
 - [Scrapy](https://github.com/scrapy/scrapy)
 - [Frontera](https://github.com/scrapinghub/frontera)
 - [Apache Kafka](https://kafka.apache.org/)
 - [Apache HBase](https://hbase.apache.org/)
 - [Twisted Python](https://twistedmatrix.com/trac/)
-    - docs/twisted-change.md に従って修正して下さい
+    - docs/twisted-change.md (Change according to this instructions)
 
-## 導入
-### pythonでの依存パッケージの導入
-virtualenvなどで環境を切り分ける場合はよしなにやってください．
-また，fronteraの導入で変なことをしているのは依存を解決しつつGitHubのmasterリポジトリを取得するためです．
+## Introduction
+### python package dependencies
+virtualenv - Please do not do it unless you separate the environment with etc.
+Solve dependencies for distibuted / kafka / hbase, then uninstall and install via the master.
 
 ```
 $ pip install scrapy colorlog msgpack-python frontera[distributed,kafka,hbase]
@@ -20,19 +20,22 @@ $ pip uninstall frontera
 $ pip install pip install git+https://github.com/scrapinghub/frontera.git
 ```
 
-### 設定ファイルの編集
-scrapyの動作に関する設定は `/crawler/settings.py` ，fronteraに関する設定は `/frontier/common.py` ， `/frontier/\*\_settings.py` ，ロギングに関する設定は `logging.conf` に記述してあります．
-最低限設定すべき項目を以下に列挙します．
+### Edit the Configuration File
+Settings for scrapy's behavior are '/crawler/settings.py'.
+Frontera's settings are '/frontier/common.py', '/frontier/*_settings.py'.
+logging settings are in 'logging.conf'
+
+The items to be set at a minimum are listed below.
 
 #### /crawler/settings.py
 ```
-BUCKET_NAME # S3バケットの名前
+BUCKET_NAME # S3[Bucket name]
 ```
 
 #### /frontier/common.py
 ```
-SPIDER_FEED_PARTITIONS # spider(Scrapy)の数
-SPIDER_LOG_PARTITIONS # worker(Frontera)の数
+SPIDER_FEED_PARTITIONS # number of spiders(Scrapy) 
+SPIDER_LOG_PARTITIONS #  number of workers(Frontera)
 
 KAFKA_LOCATION # Kafkaを動作させるマシンの場所 e.g., 'localhost:9092'
 # 以下はKafkaのトピックに関する設定です．
